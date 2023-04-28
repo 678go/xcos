@@ -22,6 +22,23 @@ var uploadCmd = &cobra.Command{
 	},
 }
 
+var downloadCmd = &cobra.Command{
+	Use:   "download",
+	Short: "download",
+	Long:  "download",
+	Run: func(cmd *cobra.Command, args []string) {
+		bucket, err := cos.NewBucket(Regin)
+		if err != nil {
+			return
+		}
+		bucket.InitClient()
+		if err := bucket.DownloadFile(context.Background(), FileName); err != nil {
+			return
+		}
+	},
+}
+
 func init() {
 	RootCmd.AddCommand(uploadCmd)
+	RootCmd.AddCommand(downloadCmd)
 }

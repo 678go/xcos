@@ -9,6 +9,7 @@ import (
 type BucketServer interface {
 	InitClient()
 	Upload(context.Context, string) error
+	DownloadFile(ctx context.Context, path string) error
 }
 
 var buckets = map[string]BucketServer{

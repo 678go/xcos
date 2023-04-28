@@ -21,8 +21,8 @@ type TenCentBucket struct {
 func (t *TenCentBucket) InitClient() {
 	t.BaseBucket = BaseBucket{
 		Secretid:  "a",
-		Secretkey: "b",
-		Bucketurl: "c",
+		Secretkey: "a",
+		Bucketurl: "https://xxxx-xxxx.cos.ap-nanjing.myqcloud.com",
 	}
 	u, _ := url.Parse(t.Bucketurl)
 	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
