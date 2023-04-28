@@ -12,6 +12,7 @@ var RootCmd = &cobra.Command{
 	Short: "cos tools",
 	Long:  "cos tools",
 	Run: func(cmd *cobra.Command, args []string) {
+		_ = cmd.Help()
 		return
 	},
 }
