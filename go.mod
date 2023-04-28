@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/aliyun/aliyun-oss-go-sdk v2.2.7+incompatible // indirect
 	github.com/clbanning/mxj v1.8.4 // indirect
 	github.com/golang-module/carbon/v2 v2.2.3 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
@@ -22,5 +23,6 @@ require (
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.41 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/term v0.6.0 // indirect
+	golang.org/x/time v0.3.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 )

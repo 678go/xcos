@@ -14,6 +14,7 @@ type BucketServer interface {
 
 var buckets = map[string]BucketServer{
 	"tencent": &TenCentBucket{},
+	"aliyun":  &AliBucket{},
 }
 
 func NewBucket(t string) (BucketServer, error) {
