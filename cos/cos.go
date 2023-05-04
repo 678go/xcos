@@ -9,12 +9,13 @@ import (
 type BucketServer interface {
 	InitClient()
 	Upload(context.Context, string) error
+	UploadFolder(context.Context, string) error
 	DownloadFile(ctx context.Context, path string) error
 }
 
 var buckets = map[string]BucketServer{
 	"tencent": &TenCentBucket{},
-	"aliyun":  &AliBucket{},
+	//"aliyun":  &AliBucket{},
 }
 
 func NewBucket(t string) (BucketServer, error) {

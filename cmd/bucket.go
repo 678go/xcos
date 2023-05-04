@@ -16,7 +16,7 @@ var uploadCmd = &cobra.Command{
 			return
 		}
 		bucket.InitClient()
-		if err := bucket.Upload(context.Background(), FileName); err != nil {
+		if err := bucket.UploadFolder(context.Background(), FileName); err != nil {
 			return
 		}
 	},

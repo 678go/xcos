@@ -3,11 +3,13 @@ package cos
 import (
 	"context"
 	"fmt"
+	"github.com/678go/xcos/util"
 	"github.com/schollz/progressbar/v3"
 	"github.com/tencentyun/cos-go-sdk-v5"
 	"golang.org/x/exp/slog"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 	"time"
 )
@@ -20,9 +22,9 @@ type TenCentBucket struct {
 
 func (t *TenCentBucket) InitClient() {
 	t.BaseBucket = BaseBucket{
-		Secretid:  "a",
-		Secretkey: "a",
-		Bucketurl: "https://xxxx-xxxx.cos.ap-nanjing.myqcloud.com",
+		Secretid:  "AKIDJSQM6A3g5F9nBICtLX0IK6e07yav62oO",
+		Secretkey: "SgruqcEk9PYfggcQ6jCVeeT8cvrfKqCM",
+		Bucketurl: "https://test-1301126197.cos.ap-nanjing.myqcloud.com",
 	}
 	u, _ := url.Parse(t.Bucketurl)
 	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
@@ -106,6 +108,23 @@ func (t *TenCentBucket) DownloadFile(ctx context.Context, path string) error {
 	}
 	if download.StatusCode == 200 {
 		check = true
+	}
+	return nil
+}
+
+func (t *TenCentBucket) UploadFolder(ctx context.Context, filepath string) error {
+	fileInfo, _ := os.Stat(filepath)
+	if !fileInfo.IsDir() {
+		if err := t.Upload(ctx, filepath); err != nil {
+			slog.Error("单个文件上传失败,", "err", err)
+			return err
+		}
+		return nil
+	}
+	for _, f := range util.GetLocalFilesListRecursive(filepath) {
+		if err := t.Upload(ctx, filepath+"/"+f); err != nil {
+			return err
+		}
 	}
 	return nil
 }
