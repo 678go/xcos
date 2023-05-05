@@ -6,8 +6,10 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
+// GetLocalFilesListRecursive 获取本地文件夹
 func GetLocalFilesListRecursive(localPath string) (files []string) {
 	wd, _ := os.Getwd()
 	localPath = filepath.Join(wd, localPath)
@@ -41,6 +43,30 @@ func GetLocalFilesListRecursive(localPath string) (files []string) {
 			}
 		}
 	}
-	fmt.Println(files)
 	return files
+}
+
+func DownloadPathFixed(f string) (string, string, error) {
+	var localPath string
+	localPath = strings.TrimLeft(f, "tmp")
+	if !filepath.IsAbs(f) {
+		dir, err := os.Getwd()
+		if err != nil {
+			slog.Error("err", err)
+			return "", "", err
+		}
+		localPath = filepath.Join(dir, "/", localPath)
+	}
+	// 创建文件夹
+	var path string
+	s, _ := os.Stat(path)
+	if s != nil && s.IsDir() {
+		path = localPath
+	} else {
+		pathList := strings.Split(localPath, "/")
+		fileName := pathList[len(pathList)-1]
+		path = localPath[:len(localPath)-len(fileName)]
+	}
+	err := os.MkdirAll(path, os.ModePerm)
+	return localPath, f, err
 }
