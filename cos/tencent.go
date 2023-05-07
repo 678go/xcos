@@ -22,9 +22,9 @@ type TenCentBucket struct {
 
 func (t *TenCentBucket) InitClient() {
 	t.BaseBucket = BaseBucket{
-		Secretid:  "AKIDsYwna9QRbYF4dx3rOkqV0DKFvLUM0Qt7",
-		Secretkey: "1nJZNuJUaVJtCE2jFVWHoAG8nEUVGn58",
-		Bucketurl: "https://test-1301126197.cos.ap-nanjing.myqcloud.com",
+		Secretid:  "a",
+		Secretkey: "a",
+		Bucketurl: "https://test-test.cos.ap-nanjing.myqcloud.com",
 	}
 	u, _ := url.Parse(t.Bucketurl)
 	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
@@ -101,7 +101,6 @@ func (t *TenCentBucket) DownloadFile(ctx context.Context, path string) error {
 	if err != nil {
 		slog.Error("获取存储桶文件列表失败", "err", err)
 	}
-	fmt.Println("bucketObj", bucketObj)
 	for _, object := range bucketObj {
 		localPath, bucketPath, err := util.DownloadPathFixed(object.Key)
 		if err != nil {
@@ -117,7 +116,6 @@ func (t *TenCentBucket) DownloadFile(ctx context.Context, path string) error {
 			return err
 		}
 	}
-	//download, err := t.client.Object.Download(ctx, source, dest, opt)
 	check = true
 
 	return nil
